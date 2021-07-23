@@ -9,7 +9,7 @@ vector<bool>visit;//记录该节点是否收录
 vector<int>path;//记录该节点的前一步顶点
 /*用以计算各点其他权重的数组*/
 vector<int>ple;//记录该节点的pleasure
-vector<float>plesum;//记录到该节点的总pleasure
+vector<int>plesum;//记录到该节点的总pleasure
 vector<int>nodenum;//记录到该节点的总中转数
 vector<int>pathnum;//记录到该节点的总路径条数
 vector<vector<int>>G;
@@ -55,7 +55,7 @@ int main()
 	pathnum.resize(citynum, 1);
 	M[start] = 0;
 	RM[0] = start;
-	ple[0] = 0;
+	ple[0] = 0;//自动为0
 	/*初始化*/
 	for (int i = 0; i < citynum - 1; i++)//已经给起始点赋值了
 	{
@@ -74,19 +74,7 @@ int main()
 		G[M[tempstr2]][M[tempstr]] = tempint;
 	}
 	/*dijkstra算法，初始化*/
-	for (int i = 0; i < citynum; i++)//更新每个邻结点的dis，plesum,nodenum
-	{
-		if (G[0][i] < Uplimit)
-		{
-			dis[i] = G[0][i];
-			plesum[i] = ple[i];
-			nodenum[i] = 1;
-			path[i] = 0;
-		}
-	}
 	dis[0] = 0;
-	visit[0] = true;
-
 	int ROMnum = 1;
 	while (1)//循环
 	{
@@ -125,7 +113,7 @@ int main()
 				}
 			}
 	}
-	printf("%d %d %d %d\n", pathnum[M["ROM"]], dis[M["ROM"]], int(plesum[M["ROM"]]), int(plesum[M["ROM"]] / nodenum[M["ROM"]]));
+	printf("%d %d %d %d\n", pathnum[M["ROM"]], dis[M["ROM"]], plesum[M["ROM"]], int(plesum[M["ROM"]] / nodenum[M["ROM"]]));
 	Printpath(M["ROM"]);
 	return 0;
 }
